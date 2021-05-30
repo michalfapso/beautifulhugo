@@ -1,0 +1,74 @@
+# Content
+- id: dateFormat
+  translation: "January 2, 2006"
+- id: shortdateFormat
+  translation: "Jan 2, 2006 15:04:05"
+- id: postedOnDate
+  translation: "Zverejnené {{ . }}"
+- id: lastModified
+  translation: "(Naposledy zmenené {{ . }})"
+- id: translationsLabel
+  translation: "Iné jazyky: "
+- id: translationsSeparator
+  translation: ", "
+- id: readMore
+  translation: "Čítať ďalej"
+- id: olderPosts
+  translation: "Staršie články"
+- id: newerPosts
+  translation: "Novšie články"
+- id: previousPost
+  translation: "Predchádzajúci článok"
+- id: nextPost
+  translation: "Nasledujúci článok"
+- id: readTime
+  translation: "minút"
+- id: words
+  translation: "slov"
+
+
+# 404 page
+- id: pageNotFound
+  translation: "Hups, táto stránka neexistuje. (chyba 404)"
+
+# Footer
+- id: poweredBy # Accepts HTML
+  translation: '<a href="https://gohugo.io">Hugo v{{ .Site.Hugo.Version }}</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>'
+
+# Navigation
+- id: toggleNavigation
+  translation: "Prepnúť navigáciu"
+- id: languageSwitcherLabel
+  translation: "Jazyk"
+- id: gcseLabelShort
+  translation: "Hľadať"
+- id: gcseLabelLong
+  translation: "Hľadať {{ .Site.Title }}"
+- id: gcseClose
+  translation: "Zavrieť"
+
+# Staticman
+- id: noComment
+  translation: "Žiadne komentáre"
+- id: oneComment
+  translation: "komentár"
+- id: moreComment
+  translation: "komentáre"
+- id: useMarkdown
+  translation: "Môžete použiť Markdown syntax"
+- id: yourName
+  translation: "Vaše meno"
+- id: yourEmail
+  translation: "Vaša emailová adresa"
+- id: yourWebsite
+  translation: "Vaša webstránka"
+
+# Delayed Disqus
+- id: show
+  translation: "Ukázať"
+- id: comments
+  translation: "komentáre" 
+
+# Related posts
+- id: seeAlso
+  translation: "Pozri tiež"
