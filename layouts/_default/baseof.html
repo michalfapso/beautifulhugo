@@ -3,7 +3,11 @@
   <head>
     {{ partial "head.html" . }}
   </head>
+  {{ if .IsHome }}
+  <body class="IsHome">
+  {{ else }}
   <body>
+  {{ end }}
     {{ partial "nav.html" . }}
     {{ block "header" . }}{{ partial "header.html" . }}{{ end }}
     {{ block "main" . }}{{ end }}
