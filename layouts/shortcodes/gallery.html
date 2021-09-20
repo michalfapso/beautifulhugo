@@ -7,7 +7,6 @@ Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 {{- if not ($.Page.Scratch.Get "figurecount") }}<link rel="stylesheet" href="{{ "css/hugo-easy-gallery.css" | absURL }}" />{{ end }}
 {{- $.Page.Scratch.Add "figurecount" 1 }}
 {{ $baseURL := .Site.BaseURL }}
-{{- print "inner_size:" (len .Inner) }}
 <div class="gallery caption-position-{{ with .Get "caption-position" | default "bottom" }}{{.}}{{end}} caption-effect-{{ with .Get "caption-effect" | default "slide" }}{{.}}{{end}} hover-effect-{{ with .Get "hover-effect" | default "zoom" }}{{.}}{{end}} {{ if ne (.Get "hover-transition") "none" }}hover-transition{{end}}" itemscope itemtype="http://schema.org/ImageGallery">
 	{{- if or (.Get "dirMode") (.Get "dir") (eq (len .Inner) 0) -}}
 		{{- $dirMode  := default "pageres" (.Get "dirMode") }}
