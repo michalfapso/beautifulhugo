@@ -175,6 +175,31 @@ This is column 2.
 {{< endcolumn >}}
 ```
 
+## Gallery
+
+Example `config.toml`:
+```
+[Params]
+  galleryImageSizeLarge = "1920x1080 q85"
+  galleryImageSizeThumb = "512x512 q60"
+```
+
+Example page bundle file `content/post/2021-the-great-roadtrip/index.md`:
+```
+...
+Gallery with all images found in `content/post/2021-the-great-roadtrip/`:
+{{< gallery />}}
+
+Gallery with all images found in `content/post/2021-the-great-roadtrip/day1`:
+{{< gallery dir="day1" />}}
+
+Gallery with all images found in `static/img/animals`. The `dirMode="global"` doesn't generate thumbnails nor large images automatically:
+{{< gallery dirMode="global" dir="img/animals" />}}
+...
+```
+
+```
+
 ## About
 
 This is an adaptation of the Jekyll theme [Beautiful Jekyll](https://deanattali.com/beautiful-jekyll/) by [Dean Attali](https://deanattali.com/aboutme#contact). It supports most of the features of the original theme, and many new features. It has diverged from the Jekyll theme over time, with years of community updates.

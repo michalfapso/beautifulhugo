@@ -7,13 +7,14 @@ Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 {{- if not ($.Page.Scratch.Get "figurecount") }}<link rel="stylesheet" href="{{ "css/hugo-easy-gallery.css" | absURL }}" />{{ end }}
 {{- $.Page.Scratch.Add "figurecount" 1 }}
 {{ $baseURL := .Site.BaseURL }}
+{{- print "inner_size:" (len .Inner) }}
 <div class="gallery caption-position-{{ with .Get "caption-position" | default "bottom" }}{{.}}{{end}} caption-effect-{{ with .Get "caption-effect" | default "slide" }}{{.}}{{end}} hover-effect-{{ with .Get "hover-effect" | default "zoom" }}{{.}}{{end}} {{ if ne (.Get "hover-transition") "none" }}hover-transition{{end}}" itemscope itemtype="http://schema.org/ImageGallery">
-	{{- if or (.Get "dirMode") (.Get "dir") -}}
-		{{- $dirMode  := default "dir" (.Get "dirMode") }}
-		{{- $dir      := default ""    (.Get "dir") }}
+	{{- if or (.Get "dirMode") (.Get "dir") (eq (len .Inner) 0) -}}
+		{{- $dirMode  := default "pageres" (.Get "dirMode") }}
+		{{- $dir      := default ""        (.Get "dir") }}
 		{{- $dirMatch := cond (eq $dir "") "**" (print (.Get "dir") "/**") }}
 
-		{{- if (eq $dirMode "resources") }}
+		{{- if (eq $dirMode "pageres") }}
 			{{- .Scratch.Set "files" ($.Page.Resources.Match $dirMatch) }}
 			{{- .Scratch.Set "baseurl" (print $baseURL $.Page.Dir) }}
 		{{- else }}
@@ -34,7 +35,7 @@ Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 			{{- if and $isimg (not $isthumb) }}
 				{{- $caption :=  .Name | replaceRE "\\..*" "" | humanize }}<!-- humanized filename without extension -->
 
-				{{- if eq $dirMode "resources" }}
+				{{- if eq $dirMode "pageres" }}
 					{{- $imageLarge := (.Fit $.Site.Params.galleryImageSizeLarge) }}
 					{{- $imageThumb := (.Fit $.Site.Params.galleryImageSizeThumb) }}
 					{{- $.Scratch.Set "linkURL"  $imageLarge.RelPermalink }}
