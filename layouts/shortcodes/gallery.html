@@ -3,6 +3,7 @@ Put this file in /layouts/shortcodes/gallery.html
 Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 -->
 <!-- count how many times we've called this shortcode; load the css if it's the first time -->
+
 {{- if not ($.Page.Scratch.Get "figurecount") }}<link rel="stylesheet" href="{{ "css/hugo-easy-gallery.css" | absURL }}" />{{ end }}
 {{- $.Page.Scratch.Add "figurecount" 1 }}
 {{ $baseURL := .Site.BaseURL }}
@@ -32,14 +33,25 @@ Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 			{{- $isimg := lower .Name | findRE "\\.(gif|jpg|jpeg|tiff|png|bmp)" }}<!-- is the current file an image? -->
 			{{- if and $isimg (not $isthumb) }}
 				{{- $caption :=  .Name | replaceRE "\\..*" "" | humanize }}<!-- humanized filename without extension -->
-				{{- $linkURL := print $baseurl "/" .Name | absURL }}<!-- absolute URL to hi-res image -->
-				{{- $thumb := .Name | replaceRE "(\\.)" ($thumbext | printf "%s.") }}<!-- filename of thumbnail image -->
-				{{- $thumbexists := where $files "Name" $thumb }}<!-- does a thumbnail image exist? --> 
-				{{- $thumbURL := print $baseURL ($.Get "dir") "/" $thumb | absURL }}<!-- absolute URL to thumbnail image -->
+
+				{{- if eq $dirMode "resources" }}
+					{{- $imageLarge := (.Fit $.Site.Params.galleryImageSizeLarge) }}
+					{{- $imageThumb := (.Fit $.Site.Params.galleryImageSizeThumb) }}
+					{{- $.Scratch.Set "linkURL"  $imageLarge.RelPermalink }}
+					{{- $.Scratch.Set "thumbURL" $imageThumb.RelPermalink }}
+					{{/*- print "imageLarge:" $imageLarge */}}
+				{{- else}}
+					{{- $.Scratch.Set "linkURL" (print $baseurl "/" .Name | absURL) }}<!-- absolute URL to hi-res image -->
+					{{- $thumb := .Name | replaceRE "(\\.)" ($thumbext | printf "%s.") }}<!-- filename of thumbnail image -->
+					{{- $thumbexists := where $files "Name" $thumb }}<!-- does a thumbnail image exist? --> 
+					{{- $.Scratch.Set "thumbURL" (cond (gt (len $thumbexists) 0) (print $baseurl "/" $thumb | absURL) ($.Scratch.Get "linkURL")) }}<!-- absolute URL to thumbnail image -->
+				{{- end}}
+				{{- $linkURL  := $.Scratch.Get "linkURL" }}
+				{{- $thumbURL := $.Scratch.Get "thumbURL" }}
 				<div class="box">
 				<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-					<div class="img" style="background-image: url('{{ if $thumbexists }}{{ $thumbURL }}{{ else }}{{ $linkURL }}{{ end }}');" >
-					<img itemprop="thumbnail" src="{{ if $thumbexists }}{{ $thumbURL }}{{ else }}{{ $linkURL }}{{ end }}" alt="{{ $caption }}" /><!-- <img> hidden if in .gallery -->
+					<div class="img" style="background-image: url('{{ $thumbURL }}');" >
+					<img itemprop="thumbnail" src="{{ $thumbURL }}" alt="{{ $caption }}" /><!-- <img> hidden if in .gallery -->
 					</div>
 				<figcaption>
 				<p>{{ $caption }}</p>
