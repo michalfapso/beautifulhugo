@@ -3,6 +3,7 @@ Put this file in /layouts/shortcodes/gallery.html
 Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 -->
 <!-- count how many times we've called this shortcode; load the css if it's the first time -->
+<!-- TODO: use srcset for image resizing as described here: https://mertbakir.gitlab.io/hugo/image-processing-in-hugo/ -->
 
 {{- if not ($.Page.Scratch.Get "figurecount") }}<link rel="stylesheet" href="{{ "css/hugo-easy-gallery.css" | absURL }}" />{{ end }}
 {{- $.Page.Scratch.Add "figurecount" 1 }}
@@ -15,7 +16,7 @@ Documentation and licence at https://github.com/liwenyip/hugo-easy-gallery/
 
 		{{- if (eq $dirMode "pageres") }}
 			{{- .Scratch.Set "files" ($.Page.Resources.Match $dirMatch) }}
-			{{- .Scratch.Set "baseurl" (print $baseURL $.Page.Dir) }}
+			{{- .Scratch.Set "baseurl" (print $baseURL $.Page.File.Dir) }}
 		{{- else }}
 			{{- .Scratch.Set "files" (readDir (print "/static/" $dir)) }}
 			{{- .Scratch.Set "baseurl" (print $baseURL $dir) }}
